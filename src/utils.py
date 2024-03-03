@@ -59,3 +59,19 @@ def load_object(file_path):
 
     except Exception as e:
         raise CustomException(e, sys)
+    
+def plot_graph(predictions: pd.Series, train: pd.DataFrame, test: pd.DataFrame, model_name: str) -> pd.DataFrame:
+    # Plot actual vs. predicted values
+    predictions_df = pd.DataFrame({'Close': predictions, 'Date': test.index})
+
+    plt.figure(figsize=(12, 6))
+    plt.plot(train['Close'], label="TRAIN", marker='.', linestyle='--')
+    plt.plot(test['Close'], label="TEST", marker='x', linestyle='--')
+    plt.plot('Date', 'Close', data=predictions_df, label="Predicted")
+
+    plt.title(model_name.title() + ' Model Prediction for Differenced Data')
+    plt.xlabel('Date')
+    plt.ylabel('Closing Price')
+    plt.legend()
+    plt.show()
+    return predictions_df

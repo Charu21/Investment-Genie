@@ -40,8 +40,7 @@ class FeatureTransformation:
             logging.info("Feature transformation step is completed!")
 
             return(
-                self.feature_transformation_config.train_data_path,
-                self.feature_transformation_config.test_data_path
+                train, test
 
             )
 

@@ -1,0 +1,81 @@
+<html>
+<body>
+    <div class="home">
+       <h1>Value Investing Genie !!</h1>
+   
+       <form action="{{ url_for('predict_datapoint')}}" method="post">
+        <h3>
+            <legend>Customised Value Investing Performance Prediction </legend>
+        </h3>
+        <div class="mb-3">
+            <label class="form-label">Stock Symbol</label>
+            <select class="form-control" name="stock" placeholder="Enter the Stock Symbol" required>
+                <option class="placeholder" selected disabled value="">Select a Stock!</option>
+                <option value="MSFT">
+                    Microsoft
+                </option>
+                <option value="AAPL" disabled>
+                    Apple
+                </option>
+                <option value="GOOG" disabled>
+                    Google
+                </option>
+                
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Model</label>
+            <select class="form-control" name="model" placeholder="Enter which model prediction you need?" required>
+                <option class="placeholder" selected disabled value="">Select your Model</option>
+                <option value="AR">
+                    Auto Regression
+                </option>
+                <option value="ARIMA">
+                    ARIMA
+                </option>
+                <option value="SARIMAX">
+                    SARIMAX
+                </option>
+                <option value="SES">
+                    ES (Single Exponential Smoothing)
+                </option>
+                <option value="DES">
+                    ES (Double Exponential Smoothing)
+                </option>
+                <option value="TES">
+                    ES (Triple Exponential Smoothing)
+                </option>
+                <option value="Prophet">
+                    Prophet
+                </option>
+                <option value="LSTM">
+                    LSTM
+                </option>
+            </select>
+        </div>
+        <br/>
+        <div class="mb-3">
+            <label class="form-label">Duration</label>
+            <select class="form-control" name="duration" placeholder="Enter the time period or window duration for the time series data:" required>
+                <option class="placeholder" selected disabled value="">Select the duration</option>
+                <option value="Daily">
+                    Daily
+                </option>
+                <option value="Weekly">
+                    Weekly
+                </option>
+                <option value="Monthly">
+                    Monthly
+                </option>
+            </select>
+        </div>
+        <br/>
+        <div class="mb-3">
+            <input class="btn btn-primary" type="submit" value="Run Model with prediction" required />
+        </div>
+    </form>
+    <h2>
+       THE  prediction is {{results}}
+    </h2>
+   <body>
+</html>
