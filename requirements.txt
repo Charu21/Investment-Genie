@@ -20,3 +20,7 @@ seaborn
 openpyxl
 ipykernel
 ipython>=4.1.2
+statsmodel
+pystan
+pmdarima
+yfinance
