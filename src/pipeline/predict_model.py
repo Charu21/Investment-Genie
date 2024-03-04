@@ -10,7 +10,7 @@ class PredictModel:
     def __init__(self):
         pass
 
-    def predict(self, model_name: str, duration: str):
+    def evaluate_model(self, model_name: str, duration: str):
         try:
             model = ModelConfig(model_name, duration)
             # model_path = 'model\model.pkl'

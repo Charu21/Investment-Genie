@@ -75,3 +75,49 @@ def plot_graph(predictions: pd.Series, train: pd.DataFrame, test: pd.DataFrame, 
     plt.legend()
     plt.show()
     return predictions_df
+
+
+def plot_losses(history):
+    plt.plot(history.history["loss"], label="training loss")
+    plt.plot(history.history["val_loss"], label="validation loss")
+    plt.legend()
+    plt.show()
+
+def prediction_report(result: Result, n_time, duration_type: str)-> np.array:
+    #Lets predict and check performance metrics
+    train_predict = result.model.predict(result.dataframe_x)
+    test_predict = result.model.predict(result.df_xtest)
+
+    #Calculate RMSE performance metrics
+    math.sqrt(mean_squared_error(result.df_y, train_predict))
+    #Test Data RMSE
+    math.sqrt(mean_squared_error(result.df_ytest, test_predict))
+
+    # Plot actual vs. predicted values
+    # Shift train prediction for plotting
+    trainPredictPlot = np.empty_like(df2)
+    trainPredictPlot[:,:] = np.nan
+    trainPredictPlot[n_time:len(train_predict) + n_time, :] = train_predict
+
+    # Shift test prediction for plotting
+    testPredictPlot = np.empty_like(df2)
+    testPredictPlot[:,:] = np.nan
+    testPredictPlot[len(train_predict) + (n_time * 2):len(df2), :] = test_predict
+
+
+    # Plot baseline and predictions
+
+    lstm_predictions = pd.DataFrame({'Close': testPredictPlot.flatten(), 'Date': df2.index})
+
+    plt.figure(figsize=(15, 6))
+    plt.plot(train['Close'], label="TRAIN", marker='.', linestyle='--')
+    plt.plot(test['Close'], label="TEST", marker='x', linestyle='--')
+    plt.plot('Date', 'Close', data=lstm_predictions , label="Predicted")
+
+    plt.title('LSTM Model Prediction on {} Data'.format(duration_type))
+    plt.xlabel('Date')
+    plt.ylabel('Closing Price')
+    plt.legend()
+    plt.show()
+
+    return testPredictPlot

@@ -23,20 +23,23 @@ class FeatureTransformation:
             data_df = pd.read_csv(data_path) 
             logging.info("Read train and test data completed")
             
-            data = data_df[['Close']].copy()
-
+            data = data_df[['Date', 'Close']].copy()
+            
             dickey_fuller_test(data['Close'])
             data['Close_Diff'] = data['Close'].diff()
             data = data.dropna(how='any')
+            data.set_index('Date', inplace=True)
 
             # Again check for stationarity
             dickey_fuller_test(data['Close_Diff'])
 
+            logging.info(data.head())
+
              # Taking 80 % as training
             train_size = int(len(data) * 0.8)
             train, test = data.iloc[:train_size], data.iloc[train_size:]
-            train.to_csv(self.feature_transformation_config.train_data_path, header=True)
-            test.to_csv(self.feature_transformation_config.test_data_path, header=True)
+            train.to_csv(self.feature_transformation_config.train_data_path, index=True, header=True)
+            test.to_csv(self.feature_transformation_config.test_data_path, index=True, header=True)
             logging.info("Feature transformation step is completed!")
 
             return(

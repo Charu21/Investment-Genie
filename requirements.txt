@@ -25,3 +25,5 @@ pystan
 pmdarima
 yfinance
 flask
+pmdarima
+prophet

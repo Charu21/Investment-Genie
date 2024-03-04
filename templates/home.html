@@ -5,7 +5,7 @@
    
        <form action="{{ url_for('predict_datapoint')}}" method="post">
         <h3>
-            <legend>Customised Value Investing Performance Prediction </legend>
+            <legend>Customised Value Investing Performance Evaluation </legend>
         </h3>
         <div class="mb-3">
             <label class="form-label">Stock Symbol</label>
@@ -23,6 +23,7 @@
                 
             </select>
         </div>
+        <br/>
         <div class="mb-3">
             <label class="form-label">Model</label>
             <select class="form-control" name="model" placeholder="Enter which model prediction you need?" required>
@@ -75,7 +76,7 @@
         </div>
     </form>
     <h2>
-       THE  prediction is {{results}}
+       THE  prediction score is {{results}}
     </h2>
    <body>
 </html>

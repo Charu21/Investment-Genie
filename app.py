@@ -38,7 +38,7 @@ def predict_datapoint():
         # print(pred_df)
 
         predict_model = PredictModel()
-        results = predict_model.predict(data.model, data.duration)
+        results = predict_model.evaluate_model(data.model, data.duration)
 
         logging.info(f'Logging the results :{results}')
         return render_template('home.html', results = results)
