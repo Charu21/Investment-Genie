@@ -9,3 +9,5 @@ class Result:
         self.df_xtest = df_xtest
         self.df_ytest = df_ytest
         self.history = history
+
+        # Result(model, X, y, X_test, y_test, history_lstm)

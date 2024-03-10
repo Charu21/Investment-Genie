@@ -3,9 +3,9 @@
     <div class="home">
        <h1>Value Investing Genie !!</h1>
    
-       <form action="{{ url_for('evaluate_datapoint')}}" method="post">
+       <form action="{{ url_for('predict_datapoint')}}" method="post">
         <h3>
-            <legend>Customised Value Investing Performance Evaluation </legend>
+            <legend>Use Best Model (LSTM) for making real time prediction using Bollinger Bands</legend>
         </h3>
         <div class="mb-3">
             <label class="form-label">Stock Symbol</label>
@@ -21,37 +21,6 @@
                     Google
                 </option>
                 
-            </select>
-        </div>
-        <br/>
-        <div class="mb-3">
-            <label class="form-label">Model</label>
-            <select class="form-control" name="model" placeholder="Enter which model prediction you need?" required>
-                <option class="placeholder" selected disabled value="">Select your Model</option>
-                <option value="AR">
-                    Auto Regression
-                </option>
-                <option value="ARIMA">
-                    ARIMA
-                </option>
-                <option value="SARIMAX">
-                    SARIMAX
-                </option>
-                <option value="SES">
-                    ES (Single Exponential Smoothing)
-                </option>
-                <option value="DES">
-                    ES (Double Exponential Smoothing)
-                </option>
-                <option value="TES">
-                    ES (Triple Exponential Smoothing)
-                </option>
-                <option value="Prophet">
-                    Prophet
-                </option>
-                <option value="LSTM">
-                    LSTM
-                </option>
             </select>
         </div>
         <br/>
@@ -72,11 +41,15 @@
         </div>
         <br/>
         <div class="mb-3">
-            <input class="btn btn-primary" type="submit" value="Run Model with prediction" required />
+            <input class="btn btn-primary" type="submit" value="Run Model for prediction:" required />
         </div>
     </form>
     <h2>
-       THE  prediction score is {{results}}
+        The Buy sell predicition symbols are shown as below:
+    </h2>
+    <img src="{{ image }}" alt="{{ image }}" />
+    <h2>
+       The maximum profit made with above signals is {{profit}}
     </h2>
     <br/>
     <body>

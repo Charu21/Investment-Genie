@@ -1,6 +1,11 @@
 from flask import Flask, request, render_template
 import numpy as np
 import pandas as pd
+import io
+import random
+from flask import Response
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 from sklearn.preprocessing import StandardScaler
 from src.logger import logging
@@ -15,27 +20,15 @@ app = application
 def index():
     return render_template('index.html')
 
-@app.route('/predictdata', methods=['GET', 'POST'])
-def predict_datapoint():
+@app.route('/evaluate', methods=['GET', 'POST'])
+def evaluate_datapoint():
     if request.method=='GET':
         return render_template('home.html')
     else:
-        duration_in_str = request.form.get('duration')
-        duration_in_int = 0
-        if duration_in_str == "Daily":
-            duration_in_int = 3
-        elif duration_in_str == "Weekly":
-            duration_in_int = 7
-        else: 
-            duration_in_int = 30
-        
         data = CustomData(
              model=request.form.get('model'),
-             duration=duration_in_int
+             duration=request.form.get('duration')
         )
-
-        # pred_df = data.get_data_as_dataframe()
-        # print(pred_df)
 
         predict_model = PredictModel()
         results = predict_model.evaluate_model(data.model, data.duration)
@@ -43,5 +36,23 @@ def predict_datapoint():
         logging.info(f'Logging the results :{results}')
         return render_template('home.html', results = results)
     
+@app.route('/predict', methods=['GET', 'POST'])
+def predict_datapoint():
+    if request.method=='GET':
+        return render_template('predict.html')
+    else:
+        data = CustomData(
+             model='LSTM',
+             duration=request.form.get('duration')
+        )
+
+        predict_model = PredictModel()
+        profit, filepath = predict_model.predict_from_model(data.model, data.duration)
+        new_filepath = "http://127.0.0.1:5000/static/image/" + filepath.split('\\')[-1]
+        logging.info(f"Filepath = {new_filepath}")
+
+        logging.info(f'Logging the results :{profit}')
+        return render_template('predict.html',profit=profit, image=new_filepath)
+
 if __name__=="__main__":
     app.run(debug=True)

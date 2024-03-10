@@ -13,18 +13,28 @@ class PredictModel:
     def evaluate_model(self, model_name: str, duration: str):
         try:
             model = ModelConfig(model_name, duration)
-            # model_path = 'model\model.pkl'
-            # model = load_object(file_path = model_path)
             obj=DataIngestion()
             raw_data = obj.fetch_data()
 
             data_eda=FeatureTransformation()
             train_arr,test_arr = data_eda.perform_eda(raw_data)
-            result = model.predict(train_arr, test_arr)
+            result = model.evaluate(train_arr, test_arr)
             return result
         except Exception as e:
             raise CustomException(e, sys)
 
+    def predict_from_model(self, model_name: str, duration: str):
+        try:
+            model = ModelConfig(model_name, duration)
+            obj=DataIngestion()
+            raw_data = obj.fetch_data()
+
+            data_eda=FeatureTransformation()
+            train_arr,test_arr = data_eda.perform_eda(raw_data)
+            result, filepath = model.predict(train_arr, test_arr)
+            return result, filepath
+        except Exception as e:
+            raise CustomException(e, sys)
 class CustomData:
     def __init__(self,
                  model: str,
